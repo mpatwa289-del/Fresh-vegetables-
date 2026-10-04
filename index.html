@@ -3,40 +3,56 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>ताज़ा सब्ज़ी दतिया - ऑनलाइन ऑर्डर</title>
+  <title>ताज़ा सब्ज़ी दतिया - ऑनलाइन मंडी</title>
   <style>
-    * { box-sizing: border-box; margin: 0; padding: 0; font-family: system-ui, sans-serif; }
-    body { background-color: #f4f7f4; color: #2c3e50; }
-    header { background: linear-gradient(135deg, #2e7d32, #1b5e20); color: white; padding: 1.2rem; text-align: center; position: sticky; top: 0; z-index: 100; box-shadow: 0 2px 10px rgba(0,0,0,0.15); }
-    header h1 { font-size: 1.5rem; margin-bottom: 4px; }
-    .search-box { margin-top: 10px; display: flex; justify-content: center; }
-    .search-box input { width: 90%; max-width: 400px; padding: 8px 14px; border: none; border-radius: 20px; font-size: 0.95rem; outline: none; }
-    .container { max-width: 1000px; margin: 15px auto; padding: 0 12px; display: grid; grid-template-columns: 2fr 1fr; gap: 15px; }
-    @media (max-width: 768px) { .container { grid-template-columns: 1fr; } }
-    .veg-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); gap: 12px; }
-    .veg-card { background: white; border-radius: 10px; overflow: hidden; box-shadow: 0 2px 6px rgba(0,0,0,0.06); display: flex; flex-direction: column; border: 1px solid #e1ebe1; }
-    .veg-card img { width: 100%; height: 110px; object-fit: cover; }
+    * { box-sizing: border-box; margin: 0; padding: 0; font-family: system-ui, -apple-system, sans-serif; }
+    body { background-color: #f4f6f4; color: #222; padding-bottom: 50px; }
+    header { background: linear-gradient(135deg, #1b5e20, #2e7d32); color: white; padding: 1rem; text-align: center; position: sticky; top: 0; z-index: 100; box-shadow: 0 2px 8px rgba(0,0,0,0.15); }
+    header h1 { font-size: 1.4rem; margin-bottom: 4px; }
+    .header-sub { font-size: 0.85rem; opacity: 0.9; margin-bottom: 8px; }
+    .call-btn { display: inline-block; background: #fff; color: #1b5e20; text-decoration: none; padding: 5px 14px; border-radius: 20px; font-weight: 700; font-size: 0.85rem; margin-bottom: 8px; }
+    .search-box { display: flex; justify-content: center; }
+    .search-box input { width: 95%; max-width: 450px; padding: 9px 15px; border: none; border-radius: 25px; font-size: 0.95rem; outline: none; }
+    .container { max-width: 1100px; margin: 15px auto; padding: 0 10px; display: grid; grid-template-columns: 2fr 1fr; gap: 15px; }
+    @media (max-width: 800px) { .container { grid-template-columns: 1fr; } }
+    .veg-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(135px, 1fr)); gap: 10px; }
+    .veg-card { background: white; border-radius: 8px; overflow: hidden; box-shadow: 0 1px 4px rgba(0,0,0,0.06); display: flex; flex-direction: column; border: 1px solid #e0e0e0; position: relative; }
+    .veg-card img { width: 100%; height: 105px; object-fit: cover; }
     .veg-info { padding: 8px; display: flex; flex-direction: column; flex-grow: 1; }
-    .veg-name { font-size: 0.95rem; font-weight: 700; color: #1b5e20; }
+    .veg-name { font-size: 0.9rem; font-weight: 700; color: #1b5e20; margin-bottom: 2px; }
     .veg-unit { font-size: 0.75rem; color: #666; margin-bottom: 6px; }
-    .veg-price { font-size: 1rem; font-weight: 800; color: #e65100; margin-bottom: 8px; }
-    .btn-add { background-color: #2e7d32; color: white; border: none; padding: 6px; border-radius: 5px; cursor: pointer; font-weight: 600; font-size: 0.85rem; margin-top: auto; }
-    .cart-section { background: white; padding: 15px; border-radius: 10px; border: 1px solid #dcdcdc; height: fit-content; position: sticky; top: 100px; }
-    .cart-section h2 { font-size: 1.15rem; color: #1b5e20; border-bottom: 2px solid #eee; padding-bottom: 6px; margin-bottom: 10px; }
+    .veg-price { font-size: 1rem; font-weight: 800; color: #d84315; margin-bottom: 8px; }
+    .btn-add { background-color: #2e7d32; color: white; border: none; padding: 7px; border-radius: 4px; cursor: pointer; font-weight: 600; font-size: 0.85rem; margin-top: auto; }
+    
+    /* Sold out स्टाइल */
+    .sold-out-badge { position: absolute; top: 6px; right: 6px; background: #d32f2f; color: white; font-size: 0.65rem; font-weight: bold; padding: 3px 6px; border-radius: 4px; text-transform: uppercase; box-shadow: 0 1px 3px rgba(0,0,0,0.3); }
+    .btn-disabled { background-color: #bdbdbd !important; cursor: not-allowed !important; color: #555 !important; }
+    .veg-card.disabled-card img { filter: grayscale(80%); opacity: 0.7; }
+
+    .cart-section { background: white; padding: 15px; border-radius: 8px; border: 1px solid #ccc; height: fit-content; position: sticky; top: 120px; }
+    .cart-section h2 { font-size: 1.1rem; color: #1b5e20; border-bottom: 2px solid #eee; padding-bottom: 6px; margin-bottom: 10px; }
     .cart-items { list-style: none; max-height: 200px; overflow-y: auto; margin-bottom: 10px; }
     .cart-item { display: flex; justify-content: space-between; align-items: center; padding: 6px 0; border-bottom: 1px solid #eee; font-size: 0.85rem; }
-    .cart-item button { background: #e53935; color: white; border: none; border-radius: 3px; padding: 2px 5px; cursor: pointer; }
-    .cart-total { font-size: 1.1rem; font-weight: 800; display: flex; justify-content: space-between; margin: 10px 0; color: #2e7d32; }
-    .order-form input, .order-form textarea { width: 100%; padding: 7px; margin-bottom: 7px; border: 1px solid #ccc; border-radius: 5px; font-size: 0.85rem; }
+    .cart-item button { background: #d32f2f; color: white; border: none; border-radius: 3px; padding: 2px 6px; cursor: pointer; }
+    .bill-row { display: flex; justify-content: space-between; font-size: 0.9rem; margin-bottom: 5px; color: #444; }
+    .cart-total { font-size: 1.15rem; font-weight: 800; display: flex; justify-content: space-between; margin: 10px 0; color: #1b5e20; border-top: 1px dashed #ccc; padding-top: 8px; }
+    .order-form input, .order-form textarea, .order-form select { width: 100%; padding: 8px; margin-bottom: 8px; border: 1px solid #ccc; border-radius: 4px; font-size: 0.85rem; }
+    .btn-loc { width: 100%; background: #0288d1; color: white; border: none; padding: 8px; font-size: 0.85rem; font-weight: 600; border-radius: 4px; cursor: pointer; margin-bottom: 8px; }
     .btn-whatsapp { width: 100%; background-color: #25d366; color: white; border: none; padding: 10px; font-size: 0.95rem; font-weight: 700; border-radius: 5px; cursor: pointer; }
+    .delivery-info { font-size: 0.75rem; color: #555; margin-top: 8px; text-align: center; }
+    
+    #qrContainer { display: none; text-align: center; background: #f9fbf9; border: 1px dashed #2e7d32; border-radius: 6px; padding: 10px; margin-bottom: 10px; }
+    #qrContainer img { width: 170px; height: 170px; object-fit: contain; margin-bottom: 6px; border: 1px solid #ddd; border-radius: 4px; background: white; }
+    .upi-tag { font-size: 0.8rem; font-weight: bold; color: #1b5e20; }
   </style>
 </head>
 <body>
   <header>
     <h1>🥦 ताज़ा सब्ज़ी दतिया</h1>
-    <p>खेत से सीधे आपके घर तक ताज़ा सब्ज़ियाँ</p>
+    <div class="header-sub">खेत से सीधे आपके घर | शुद्ध व ताज़ा डिलीवरी</div>
+    <a href="tel:919876543210" id="callLink" class="call-btn">📞 सीधे कॉल करें: 9876543210</a>
     <div class="search-box">
-      <input type="text" id="searchInput" placeholder="सब्ज़ी खोजें (आलू, मटर, टमाटर)..." onkeyup="filterVegetables()">
+      <input type="text" id="searchInput" placeholder="सब्ज़ी खोजें (मशरूम, पनीर, मटर, आलू)..." onkeyup="filterVegetables()">
     </div>
   </header>
 
@@ -45,82 +61,204 @@
     <aside class="cart-section">
       <h2>🛒 आपकी थैली (Cart)</h2>
       <ul class="cart-items" id="cartList"><li style="color:#777; text-align:center; padding:10px 0;">थैली खाली है</li></ul>
-      <div class="cart-total"><span>कुल बिल:</span><span id="totalBill">₹0</span></div>
+      
+      <div class="bill-row"><span>सब्ज़ियों का बिल:</span><span id="vegTotal">₹0</span></div>
+      <div class="bill-row"><span>डिलीवरी शुल्क:</span><span id="deliveryCharge">₹0</span></div>
+      <div class="cart-total"><span>कुल बिल:</span><span id="finalTotal">₹0</span></div>
+
       <div class="order-form">
         <input type="text" id="custName" placeholder="आपका नाम *" required>
         <input type="tel" id="custPhone" placeholder="फ़ोन नंबर *" required>
-        <textarea id="custAddr" rows="2" placeholder="डिलीवरी पता (दतिया) *" required></textarea>
+        
+        <button type="button" class="btn-loc" onclick="fetchLiveLocation()">📍 मेरी GPS लोकेशन जोड़ें (क्लिक करें)</button>
+        <input type="hidden" id="locLink" value="">
+        <div id="locStatus" style="font-size:0.75rem; color:#0288d1; margin-bottom:6px;"></div>
+
+        <textarea id="custAddr" rows="2" placeholder="गली, मोहल्ला या मकान नंबर (दतिया) *" required></textarea>
+
+        <label style="font-size:0.8rem; font-weight:bold; color:#444;">भुगतान का माध्यम चुनें:</label>
+        <select id="payMode" onchange="togglePaymentMode()">
+          <option value="Cash on Delivery (घर पर नकद)">1. Cash on Delivery (घर पर नकद)</option>
+          <option value="UPI / QR Code (ऑनलाइन)">2. ऑनलाइन UPI / QR कोड से भुगतान</option>
+        </select>
+
+        <div id="qrContainer">
+          <p style="font-size:0.8rem; margin-bottom:5px;">Scan & Pay करें:</p>
+          <img id="qrImage" src="qr.png" alt="दुकान का QR कोड" onerror="this.src='https://api.qrserver.com/v1/create-qr-code/?size=180x180&data=upi://pay?pa=9876543210@paytm&pn=Taaza%20Sabzi%20Datia'">
+          <div class="upi-tag" id="upiIdText">UPI ID: 9876543210@paytm</div>
+          <p style="font-size:0.7rem; color:#777; margin-top:3px;">भुगतान के बाद नीचे WhatsApp बटन दबाएँ</p>
+        </div>
+
         <button class="btn-whatsapp" onclick="sendOrderOnWhatsApp()">WhatsApp पर ऑर्डर भेजें 📲</button>
       </div>
+      <div class="delivery-info">🛵 ₹200 से अधिक के ऑर्डर पर फ्री डिलीवरी! (कम पर ₹20 शुल्क)</div>
     </aside>
   </div>
 
   <script>
-    // अपना WhatsApp नंबर यहाँ डालें (91 के आगे 10 अंकों का नंबर)
-    const SHOP_WHATSAPP_NUMBER = "919876543210";
+    // -------------------------------------------------------------
+    // दुकान की सेटिंग (अपना नंबर और UPI ID यहाँ डालें)
+    // -------------------------------------------------------------
+    const SHOP_WHATSAPP_NUMBER = "7610181489"; 
+    const DISPLAY_PHONE = "7610181489";         
+    const SHOP_UPI_ID = "7509326255@Navi";     
+    const FREE_DELIVERY_ABOVE = 200;            
+    const BASE_DELIVERY_FEE = 20;               
 
+    document.getElementById("callLink").href = "tel:" + DISPLAY_PHONE;
+    document.getElementById("callLink").innerText = "📞 सीधे कॉल करें: " + DISPLAY_PHONE;
+    document.getElementById("upiIdText").innerText = "UPI ID: " + SHOP_UPI_ID;
+
+    // -------------------------------------------------------------
+    // सब्ज़ियों की सूची:
+    // ध्यान दें: अगर कोई सब्ज़ी ख़त्म हो जाए, तो उसके आगे available: false कर दें।
+    // जब वापस आ जाए, तो available: true कर दें।
+    // -------------------------------------------------------------
     const vegetableCatalog = [
-      { id: 1, name: "आलू (Potato)", unit: "1 kg", price: 30, img: "https://images.unsplash.com/photo-1518977676601-b53f82aba655?w=300" },
-      { id: 2, name: "प्याज़ (Onion)", unit: "1 kg", price: 35, img: "https://images.unsplash.com/photo-1618512496248-a07fe83aa8cb?w=300" },
-      { id: 3, name: "टमाटर (Tomato)", unit: "1 kg", price: 40, img: "https://images.unsplash.com/photo-1592924357228-91a4daadcfea?w=300" },
-      { id: 4, name: "हरी मटर (Green Peas)", unit: "1 kg", price: 60, img: "https://images.unsplash.com/photo-1587735243615-c03f25aaff15?w=300" },
-      { id: 5, name: "हरी मिर्च (Chilli)", unit: "250 gm", price: 20, img: "https://images.unsplash.com/photo-1588252303782-cb80119abd6d?w=300" },
-      { id: 6, name: "अदरक (Ginger)", unit: "250 gm", price: 30, img: "https://images.unsplash.com/photo-1615485290382-441e4d049cb5?w=300" },
-      { id: 7, name: "लहसुन (Garlic)", unit: "250 gm", price: 50, img: "https://images.unsplash.com/photo-1540148426945-6cf22a6b2383?w=300" },
-      { id: 8, name: "हरा धनिया (Dhaniya)", unit: "1 गड्डी", price: 15, img: "https://images.unsplash.com/photo-1509358271058-acd22cc93898?w=300" },
-      { id: 9, name: "फूलगोभी (Gobhi)", unit: "1 पीस", price: 30, img: "https://images.unsplash.com/photo-1568584711075-3d021a7c3ca3?w=300" },
-      { id: 10, name: "भिंडी (Bhindi)", unit: "500 gm", price: 30, img: "https://images.unsplash.com/photo-1628744448840-55bdb2497bd4?w=300" }
+      { id: 101, name: "बटन मशरूम (Button Mushroom)", unit: "1 पैकेट (200g)", price: 50, available: true, img: "https://images.unsplash.com/photo-1504544750208-dc0358e63f7f?w=300" },
+      { id: 102, name: "ताज़ा पनीर (Fresh Paneer)", unit: "250 gm", price: 90, available: true, img: "https://images.unsplash.com/photo-1631452180519-c014fe946bc7?w=300" },
+      { id: 103, name: "स्वीट कॉर्न / मक्का (Corn)", unit: "1 पैकेट / 2 भुट्टा", price: 30, available: true, img: "https://images.unsplash.com/photo-1551754655-cd27e38d2076?w=300" },
+      { id: 1, name: "आलू (Potato)", unit: "1 kg", price: 30, available: true, img: "https://images.unsplash.com/photo-1518977676601-b53f82aba655?w=300" },
+      { id: 2, name: "प्याज़ (Onion)", unit: "1 kg", price: 35, available: true, img: "https://images.unsplash.com/photo-1618512496248-a07fe83aa8cb?w=300" },
+      { id: 3, name: "टमाटर (Tomato)", unit: "1 kg", price: 40, available: true, img: "https://images.unsplash.com/photo-1592924357228-91a4daadcfea?w=300" },
+      { id: 4, name: "हरी मटर (Green Peas)", unit: "1 kg", price: 60, available: true, img: "https://images.unsplash.com/photo-1592417817098-8f3d6910985c?w=300" },
+      { id: 5, name: "पालक (Spinach)", unit: "500 gm", price: 20, available: true, img: "https://images.unsplash.com/photo-1576045057995-568f588f82fb?w=300" },
+      { id: 6, name: "मेथी (Fenugreek)", unit: "500 gm", price: 25, available: true, img: "https://images.unsplash.com/photo-1540420773420-3366772f4999?w=300" },
+      { id: 7, name: "लौकी (Lauki)", unit: "1 पीस", price: 30, available: true, img: "https://images.unsplash.com/photo-1598170845058-32b9d6a5da37?w=300" },
+      { id: 8, name: "गिलकी / तोरई (Tori)", unit: "500 gm", price: 30, available: true, img: "https://images.unsplash.com/photo-1597362925123-77861d3fbac7?w=300" },
+      { id: 9, name: "कद्दू (Kaddu)", unit: "1 kg", price: 25, available: true, img: "https://images.unsplash.com/photo-1506917728037-b6fb01c7e403?w=300" },
+      { id: 10, name: "करेला (Bitter Gourd)", unit: "500 gm", price: 30, available: true, img: "https://images.unsplash.com/photo-1615485290382-441e4d049cb5?w=300" },
+      { id: 11, name: "फूलगोभी (Gobhi)", unit: "1 पीस", price: 35, available: true, img: "https://images.unsplash.com/photo-1568584711075-3d021a7c3ca3?w=300" },
+      { id: 12, name: "पत्तागोभी (Patta Gobhi)", unit: "1 पीस", price: 25, available: true, img: "https://images.unsplash.com/photo-1594282486552-05b4d80fbb9f?w=300" },
+      { id: 13, name: "शिमला मिर्च (Capsicum)", unit: "500 gm", price: 40, available: true, img: "https://images.unsplash.com/photo-1563565375-f3fdfdbefa83?w=300" },
+      { id: 14, name: "भिंडी (Bhindi)", unit: "500 gm", price: 30, available: true, img: "https://images.unsplash.com/photo-1628744448840-55bdb2497bd4?w=300" },
+      { id: 15, name: "बैंगन (Brinjal)", unit: "1 kg", price: 30, available: true, img: "https://images.unsplash.com/photo-1615484477778-ca3b77940c25?w=300" },
+      { id: 16, name: "खीरा (Cucumber)", unit: "1 kg", price: 30, available: true, img: "https://images.unsplash.com/photo-1449339854873-750e6913301b?w=300" },
+      { id: 17, name: "मूली (Radish)", unit: "1 kg", price: 25, available: true, img: "https://images.unsplash.com/photo-1593105544559-ecb03bf76f82?w=300" },
+      { id: 18, name: "गाजर (Carrot)", unit: "1 kg", price: 40, available: true, img: "https://images.unsplash.com/photo-1598170845058-32b9d6a5da37?w=300" },
+      { id: 19, name: "हरी मिर्च (Chilli)", unit: "250 gm", price: 20, available: true, img: "https://images.unsplash.com/photo-1588252303782-cb80119abd6d?w=300" },
+      { id: 20, name: "अदरक (Ginger)", unit: "250 gm", price: 35, available: true, img: "https://images.unsplash.com/photo-1615485290382-441e4d049cb5?w=300" },
+      { id: 21, name: "लहसुन (Garlic)", unit: "250 gm", price: 60, available: true, img: "https://images.unsplash.com/photo-1540148426945-6cf22a6b2383?w=300" },
+      { id: 22, name: "हरा धनिया (Dhaniya)", unit: "1 गड्डी", price: 15, available: true, img: "https://images.unsplash.com/photo-1509358271058-acd22cc93898?w=300" }
     ];
 
     let cart = [];
+    let itemsTotal = 0;
+    let currentDeliveryCharge = 0;
+
     function renderCatalog(items) {
-      document.getElementById("vegContainer").innerHTML = items.map(veg => `
-        <div class="veg-card">
+      document.getElementById("vegContainer").innerHTML = items.map(veg => {
+        const isOut = veg.available === false;
+        return `
+        <div class="veg-card ${isOut ? 'disabled-card' : ''}">
+          ${isOut ? '<div class="sold-out-badge">स्टॉक ख़त्म (Sold Out)</div>' : ''}
           <img src="${veg.img}" alt="${veg.name}">
           <div class="veg-info">
             <div class="veg-name">${veg.name}</div>
             <div class="veg-unit">${veg.unit}</div>
             <div class="veg-price">₹${veg.price}</div>
-            <button class="btn-add" onclick="addToCart(${veg.id})">+ जोड़ें</button>
+            <button class="btn-add ${isOut ? 'btn-disabled' : ''}" 
+                    onclick="${isOut ? '' : `addToCart(${veg.id})`}" 
+                    ${isOut ? 'disabled' : ''}>
+              ${isOut ? 'उपलब्ध नहीं' : '+ जोड़ें'}
+            </button>
           </div>
-        </div>`).join('');
+        </div>`;
+      }).join('');
     }
+
     function filterVegetables() {
       const term = document.getElementById("searchInput").value.toLowerCase();
       renderCatalog(vegetableCatalog.filter(veg => veg.name.toLowerCase().includes(term)));
     }
+
     function addToCart(id) {
       const item = vegetableCatalog.find(v => v.id === id);
+      if (!item || item.available === false) return;
       const inCart = cart.find(c => c.id === id);
       if (inCart) inCart.qty += 1; else cart.push({ ...item, qty: 1 });
       updateCartUI();
     }
+
     function removeFromCart(id) {
       cart = cart.filter(c => c.id !== id);
       updateCartUI();
     }
+
     function updateCartUI() {
       const list = document.getElementById("cartList");
-      if (cart.length === 0) { list.innerHTML = '<li style="color:#777;text-align:center;padding:10px 0;">थैली खाली है</li>'; document.getElementById("totalBill").innerText = '₹0'; return; }
-      let total = 0;
+      if (cart.length === 0) {
+        list.innerHTML = '<li style="color:#777;text-align:center;padding:10px 0;">थैली खाली है</li>';
+        document.getElementById("vegTotal").innerText = '₹0';
+        document.getElementById("deliveryCharge").innerText = '₹0';
+        document.getElementById("finalTotal").innerText = '₹0';
+        itemsTotal = 0;
+        return;
+      }
+      itemsTotal = 0;
       list.innerHTML = cart.map(item => {
-        total += item.price * item.qty;
+        itemsTotal += item.price * item.qty;
         return `<li class="cart-item"><div><strong>${item.name}</strong><br><small>₹${item.price} x ${item.qty}</small></div><div><strong>₹${item.price * item.qty}</strong> <button onclick="removeFromCart(${item.id})">✕</button></div></li>`;
       }).join('');
-      document.getElementById("totalBill").innerText = `₹${total}`;
+
+      currentDeliveryCharge = (itemsTotal >= FREE_DELIVERY_ABOVE) ? 0 : BASE_DELIVERY_FEE;
+      document.getElementById("vegTotal").innerText = `₹${itemsTotal}`;
+      document.getElementById("deliveryCharge").innerText = currentDeliveryCharge === 0 ? "मुफ़्त (Free)" : `₹${currentDeliveryCharge}`;
+      document.getElementById("finalTotal").innerText = `₹${itemsTotal + currentDeliveryCharge}`;
     }
+
+    function togglePaymentMode() {
+      const mode = document.getElementById("payMode").value;
+      const qrBox = document.getElementById("qrContainer");
+      qrBox.style.display = mode.includes("UPI") ? "block" : "none";
+    }
+
+    function fetchLiveLocation() {
+      const status = document.getElementById("locStatus");
+      if (!navigator.geolocation) {
+        status.innerText = "GPS उपलब्ध नहीं है।";
+        return;
+      }
+      status.innerText = "लोकेशन ली जा रही है... Allow करें।";
+      navigator.geolocation.getCurrentPosition(
+        (pos) => {
+          const lat = pos.coords.latitude;
+          const lon = pos.coords.longitude;
+          document.getElementById("locLink").value = `https://maps.google.com/?q=${lat},${lon}`;
+          status.innerText = "✅ GPS लोकेशन जुड़ गई!";
+        },
+        () => {
+          status.innerText = "⚠️ लोकेशन अनुमति नहीं मिली। हाथ से पता लिखें।";
+        }
+      );
+    }
+
     function sendOrderOnWhatsApp() {
-      if (cart.length === 0) { alert("थैली में सब्ज़ियाँ जोड़ें!"); return; }
+      if (cart.length === 0) { alert("कृपया थैली में सब्ज़ियाँ जोड़ें!"); return; }
       const name = document.getElementById("custName").value.trim();
       const phone = document.getElementById("custPhone").value.trim();
       const addr = document.getElementById("custAddr").value.trim();
-      if (!name || !phone || !addr) { alert("सभी जानकारी भरें!"); return; }
-      let total = 0, msg = `*नया सब्ज़ी ऑर्डर (दतिया)*\n------------------\n*नाम:* ${name}\n*फ़ोन:* ${phone}\n*पता:* ${addr}\n------------------\n`;
-      cart.forEach(i => { total += i.price * i.qty; msg += `• ${i.name} - ${i.qty} = ₹${i.price * i.qty}\n`; });
-      msg += `------------------\n*कुल बिल:* ₹${total}`;
+      const payMode = document.getElementById("payMode").value;
+      const locLink = document.getElementById("locLink").value;
+
+      if (!name || !phone || !addr) { alert("कृपया नाम, फ़ोन नंबर और पता भरें!"); return; }
+
+      let msg = `*🥦 नया सब्ज़ी ऑर्डर (दतिया)*\n------------------------\n`;
+      msg += `*ग्राहक:* ${name}\n*फ़ोन:* ${phone}\n*पता:* ${addr}\n`;
+      if (locLink) {
+        msg += `*📍 GPS लोकेशन:* ${locLink}\n`;
+      }
+      msg += `*भुगतान तरीका:* ${payMode}\n------------------------\n*आइटम:*\n`;
+      cart.forEach(i => { msg += `• ${i.name} (${i.qty}x) = ₹${i.price * i.qty}\n`; });
+      msg += `------------------------\n`;
+      msg += `*सब्जियों का बिल:* ₹${itemsTotal}\n`;
+      msg += `*डिलीवरी शुल्क:* ${currentDeliveryCharge === 0 ? "FREE" : "₹" + currentDeliveryCharge}\n`;
+      msg += `*कुल राशि:* ₹${itemsTotal + currentDeliveryCharge}`;
+
       window.open(`https://wa.me/${SHOP_WHATSAPP_NUMBER}?text=${encodeURIComponent(msg)}`, '_blank');
     }
+
     renderCatalog(vegetableCatalog);
   </script>
 </body>
-  </html>
+</html>
